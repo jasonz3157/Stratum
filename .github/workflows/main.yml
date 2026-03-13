@@ -51,6 +51,7 @@ jobs:
           mv $APK "com.stratumauth.app.$REF.apk"
 
       - name: Publish Wear OS
+        if: false
         run: |
           REF=$(echo $GITHUB_SHA | cut -c -7)
           sed -i "s|package=\"com.stratumauth.app\"|package=\"com.stratumauth.app.$REF\"|g" Stratum.WearOS/Properties/AndroidManifest.xml
