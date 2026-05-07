@@ -43,14 +43,14 @@ jobs:
       - name: Publish Android
         run: |
           REF=$(echo $GITHUB_SHA | cut -c -7)
-          sed -i "s|package=\"com.stratumauth.app\"|package=\"com.stratumauth.app.$REF\"|g" Stratum.Droid/Properties/AndroidManifest.xml
-          sed -i "s|<string name=\"displayName\" translatable=\"false\">Authenticator</string>|<string name=\"displayName\" translatable=\"false\">Authenticator ($REF)</string>|g" Stratum.Droid/Resources/values/strings.xml
+          sed -i "s|<string name=\"displayName\" translatable=\"false\">Authenticator</string>|<string name=\"displayName\" translatable=\"false\">Stratum</string>|g" Stratum.Droid/Resources/values/strings.xml
 
           dotnet publish -f:$ANDROID_FRAMEWORK -c:$CONFIGURATION --no-restore Stratum.Droid/Stratum.Droid.csproj
           APK=$(find Stratum.Droid/bin/$CONFIGURATION/$ANDROID_FRAMEWORK/publish -name '*-Signed.apk')
           mv $APK "com.stratumauth.app.$REF.apk"
 
       - name: Publish Wear OS
+        if: false
         run: |
           REF=$(echo $GITHUB_SHA | cut -c -7)
           sed -i "s|package=\"com.stratumauth.app\"|package=\"com.stratumauth.app.$REF\"|g" Stratum.WearOS/Properties/AndroidManifest.xml
